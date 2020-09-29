@@ -8,7 +8,7 @@ namespace Com_Methods
 {
     class QR_Methods
     {
-        public static void QR_Decompose(Matrix A, Matrix Q, Matrix R)
+        public static void QR_DecomposeMOD(Matrix A, Matrix Q, Matrix R)
         {
             Matrix Q_ = new Matrix(Q.M, Q.N);
 
@@ -41,7 +41,44 @@ namespace Com_Methods
             }
         }
 
-        public static Vector Start_Solver(Matrix A, Vector F)
+
+        public static void QR_Decompose(Matrix A, Matrix Q, Matrix R)
+        {
+            Matrix Q_ = new Matrix(Q.M, Q.N);
+
+            for (int j = 0; j < A.M; j++)
+            {
+                for (int i = 0; i < j; i++)
+                {
+                    //rij=(q_j,Qi)
+                    R.Elem[i][j] = A.GetCol(j) * Q.GetCol(i);
+                }
+                
+                double[] sum = new double[A.M];
+                //Erijqi
+                for (int i = 0; i < j; i++)
+                    for (int k = 0; k < A.M; k++)
+                        sum[k] += R.Elem[i][j] * Q.Elem[k][i];
+                
+                //q_j-=xj-Erijqi
+                for (int k = 0; k < A.M; k++)
+                    Q_.Elem[k][j] = A.GetCol(j).Elem[k] - sum[k];
+
+
+                //rjj=|q_j|
+                R.Elem[j][j] = Q_.GetCol(j).Norma();
+
+                if (R.Elem[j][j] == 0)
+                    break;
+
+                //qj=q_j/rjj
+                for (int k = 0; k < A.M; k++)
+                    Q.Elem[k][j] = Q_.Elem[k][j] / R.Elem[j][j];
+
+            }
+        }
+
+        public static Vector Start_Solver(Matrix A, Vector F, bool mod = false)
         {
             Vector X = new Vector(F.N);
             Vector Y;
@@ -49,7 +86,10 @@ namespace Com_Methods
             Matrix R = new Matrix(F.N, F.N);
 
             //0. A=QR
-            QR_Decompose(A, Q, R);
+            if (mod)
+                QR_DecomposeMOD(A, Q, R);
+            else
+                QR_Decompose(A, Q, R);
             //1. y=Q'F
             Y = F * Q;
             //2. Rx=y

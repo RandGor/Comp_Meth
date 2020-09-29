@@ -48,7 +48,7 @@ namespace Com_Methods
             //Гаусс меняет вектор и матрицу
             X_GAUSS.Elem = Gaussian_Methods.Start_Solver(A_Gaussian, F_Gaussian).Elem;
             X_LU.Elem = LU_Methods.Start_Solver(A, F).Elem;
-            X_QR.Elem = QR_Methods.Start_Solver(A, F).Elem;
+            X_QR.Elem = QR_Methods.Start_Solver(A, F,true).Elem;
 
             Console.WriteLine("Gauss: " + X_GAUSS.ToString());
             Console.WriteLine("LU: " + X_LU.ToString());
