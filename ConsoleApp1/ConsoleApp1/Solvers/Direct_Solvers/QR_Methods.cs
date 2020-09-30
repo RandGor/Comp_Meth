@@ -8,6 +8,29 @@ namespace Com_Methods
 {
     class QR_Methods
     {
+        public static void QR_DecomposeGivence(Matrix A, Matrix Q, Matrix R) {
+            Matrix G = new Matrix(A.M, A.N);
+            Matrix X = new Matrix(A.M, A.N);
+            A.Copy(X);
+
+            double sinO = 0;
+            double cosO = 1;
+            double div = 1;
+
+            for (int i = 1; i < A.M; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if (Math.Abs(X.Elem[i][j]) > CONST.Eps)
+                    {
+                        div = Math.Sqrt(X.Elem[i][j] * X.Elem[i][j] + X.Elem[j][j] * X.Elem[j][j]);
+                        sinO = X.Elem[i][j] / div;
+                        cosO = X.Elem[j][j] / div;
+                    }
+                }
+            }
+        }
+
         public static void QR_DecomposeMOD(Matrix A, Matrix Q, Matrix R)
         {
             Matrix Q_ = new Matrix(Q.M, Q.N);
@@ -40,7 +63,6 @@ namespace Com_Methods
 
             }
         }
-
 
         public static void QR_Decompose(Matrix A, Matrix Q, Matrix R)
         {
