@@ -50,6 +50,7 @@
     <Compile Include="Solvers\Direct_Solvers\LU_Methods.cs" />
     <Compile Include="Solvers\Direct_Solvers\QR_Methods.cs" />
     <Compile Include="Solvers\Direct_Solvers\Substitution_Methods.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <Compile Include="Vector\Vector.cs" />
   </ItemGroup>
   <ItemGroup>

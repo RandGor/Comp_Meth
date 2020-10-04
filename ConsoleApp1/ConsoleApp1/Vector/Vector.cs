@@ -92,9 +92,14 @@ namespace Com_Methods
             string s = "";
 
             for (int i = 0; i < N - 1; i++)
-                s += Elem[i] + " ";
+                s += Elem[i] + "\t";
 
             return s + Elem[N-1];
+        }
+        public void SetI()
+        {
+            for (int i = 0; i < N; i++)
+                Elem[i] = 1;
         }
     }
 }

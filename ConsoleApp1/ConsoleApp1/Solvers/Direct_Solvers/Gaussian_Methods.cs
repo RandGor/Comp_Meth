@@ -18,31 +18,28 @@ namespace Com_Methods
             return Index;
         }
 
-        public static void Direct_Way(Matrix A, Vector F, bool find_Main_Element = true)
+        public static void Direct_Way(Matrix A, Vector F)
         {
             double help = 0;
             for (int i = 0; i < A.M-1; i++)
             {
-                if (find_Main_Element)
-                {
-                    int I = Find_Main_Element(A, i);
+                int I = Find_Main_Element(A, i);
                 
-                    if (I != i)
-                    {
-                        var Help = A.Elem[I];
-                        A.Elem[I] = A.Elem[i];
-                        A.Elem[i] = Help;
+                if (I != i)
+                {
+                    var Help = A.Elem[I];
+                    A.Elem[I] = A.Elem[i];
+                    A.Elem[i] = Help;
 
-                        help = F.Elem[i];
-                        F.Elem[i] = F.Elem[I];
-                        F.Elem[I] = help;
-                    }
+                    help = F.Elem[i];
+                    F.Elem[i] = F.Elem[I];
+                    F.Elem[I] = help;
                 }
 
                 for (int j = i + 1; j < A.M; j++)
                 {
                     help = A.Elem[j][i] / A.Elem[i][i];
-                    A.Elem[j][i] = 0; //logic
+                    A.Elem[j][i] = 0;
                     for (int k = i + 1; k < A.N; k++)
                     {
                         A.Elem[j][k] -= A.Elem[i][k] * help;
@@ -52,8 +49,14 @@ namespace Com_Methods
             }
         }
 
-        public static Vector Start_Solver(Matrix A, Vector F) {
-            Vector X = new Vector(F.N);
+        public static Vector Start_Solver(Matrix A_, Vector F_) {
+            Matrix A = new Matrix(A_.M, A_.N);
+            Vector F = new Vector(F_.N);
+
+            Vector X = new Vector(F_.N);
+
+            A_.Copy(A);
+            F_.Copy(F);
 
             Direct_Way(A, F);
 

@@ -14,7 +14,7 @@ namespace Com_Methods
 
             Vector F = new Vector(A.N);
 
-            Gaussian_Methods.Direct_Way(U, F, false);
+            Gaussian_Methods.Direct_Way(U, F);
 
 
             for (int i = 1; i < A.M; i++)

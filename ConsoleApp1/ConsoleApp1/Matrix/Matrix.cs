@@ -8,12 +8,12 @@ namespace Com_Methods
 {
     public interface IMatrix
     {
-        int M { set; get; } //stro4ki
+        int M { set; get; } //stroki
         int N { set; get; }
     }
     public class Matrix: IMatrix
     {
-        public int M { set; get; } //stro4ki
+        public int M { set; get; } //stroki
         public int N { set; get; }
         public double[][] Elem { set; get; }
         public Matrix() { }
@@ -21,6 +21,13 @@ namespace Com_Methods
             M = m; N = n; Elem = new double[m][];
             for (int i = 0; i < n; i++)
                 Elem[i] = new double[n];
+        }
+
+        public void SetI()
+        {
+            for (int i = 0; i < M; i++)
+                for (int j = 0; j < N; j++)
+                    Elem[i][j] = i==j?1:0;
         }
 
         public double NormRow(int i)
